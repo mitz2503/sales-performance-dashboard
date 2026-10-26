@@ -1,0 +1,35 @@
+-- Exercise 2 — Top customers
+-- Run:
+--   python scripts/run_sql.py sql/exercises/02_top_customers.sql
+--
+-- Try this before you open sql/solutions/02_top_customers.sql.
+--
+-- Business question
+--   Which 10 customer ids contribute the most revenue, and are those
+--   customers also profitable? What share of company revenue do they represent?
+--
+-- What to return
+--   customer ids with revenue rank 1 through 10:
+--     revenue_rank, customer_id, customer_name, segment,
+--     revenue, profit, margin_pct, orders, revenue_share
+--   revenue_share is that customer's revenue divided by company revenue.
+--
+-- Hints
+--   1. Group by customer_id. The name and the segment are attributes.
+--      Each customer id in this file has one name and one segment.
+--   2. Most customers buy in more than one region. Leave region off this
+--      list unless you define which region you mean.
+--   3. One customer name is attached to more than one customer id
+--      (see the data dictionary in the README). Ranking by id keeps them
+--      split. Say which grain you chose in a comment above your query.
+--      The reference solution ranks customer_id.
+--   4. Company revenue, repeated on every row, is a window:
+--        SUM(revenue) OVER ()
+--      Example 3 shows the shape. Divide the customer's revenue by it.
+--   5. RANK() OVER (ORDER BY revenue DESC) assigns the rank.
+--      A window result cannot be filtered in the same SELECT that defines it.
+--      Compute the rank in a CTE, then keep rank <= 10 in an outer query.
+--   6. A tie at the boundary can return more than 10 rows. That is what
+--      RANK does. Add customer_id as a tie-break if you want a stable order.
+
+-- Your query:

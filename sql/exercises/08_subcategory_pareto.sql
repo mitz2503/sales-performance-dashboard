@@ -1,0 +1,40 @@
+-- Exercise 8 — Sub-category concentration
+-- Run:
+--   python scripts/run_sql.py sql/exercises/08_subcategory_pareto.sql
+--
+-- Try this before you open sql/solutions/08_subcategory_pareto.sql.
+--
+-- Business question
+--   Which sub-categories account for the first 80% of revenue, and what
+--   margin does each of those sub-categories earn? A sub-category can be
+--   important to revenue and still lose money.
+--
+-- What to return
+--   One row per sub-category, largest revenue first:
+--     sub_category, category, revenue, profit, margin_pct,
+--     cumulative_revenue_share, in_first_80_pct
+--   cumulative_revenue_share runs from the largest sub-category downward
+--   and reaches 1.00 on the last row.
+--   in_first_80_pct is 1 for the rows that get you to 80% of revenue,
+--   including the row that crosses the line, and 0 after that.
+--
+-- Hints
+--   1. Aggregate to one row per sub-category first. A sub-category belongs
+--      to one category in this file, so you can group by both.
+--   2. The running revenue is a window, in the style of example 3:
+--        SUM(revenue) OVER (
+--          ORDER BY revenue DESC, sub_category
+--          ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+--        )
+--      The sub_category tie-break keeps two equal revenues from sharing
+--      one running total.
+--   3. Divide the running revenue by SUM(revenue) OVER (), the company total.
+--   4. A row is still inside the first 80% when the running total *before*
+--      that row was under 80% of company revenue. The row that crosses 80%
+--      counts. Later rows do not.
+--      previous share = (running_revenue - revenue) / total_revenue
+--   5. Read the margin column beside the flag. Example 2 already listed
+--      sub-categories with negative total profit. This exercise asks whether
+--      any of those sit inside the revenue that makes up the first 80%.
+
+-- Your query:

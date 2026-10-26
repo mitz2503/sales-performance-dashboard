@@ -1,0 +1,38 @@
+-- Exercise 6 — Returned orders
+-- Run:
+--   python scripts/run_sql.py sql/exercises/06_returned_orders.sql
+--
+-- Try this before you open sql/solutions/06_returned_orders.sql.
+--
+-- Business question
+--   What fraction of orders were returned, and what fraction of revenue sits
+--   on those orders? Inside each category, how do revenue, profit, and margin
+--   compare for returned orders versus kept orders?
+--
+-- The Orders table still contains returned lines. A return flag does not
+-- reverse the sale. Your headline totals include those lines unless you
+-- filter them out. Decide which total you will talk about, and say so.
+--
+-- What to return
+--   Part A, one row for the whole company, at order grain:
+--     orders, returned_orders, returned_order_share,
+--     returned_revenue, revenue, returned_revenue_share
+--   Part B, one row per category and status (Returned or Kept):
+--     category, return_status, orders, revenue, profit, margin_pct
+--
+-- Hints
+--   1. returns has one row per returned order id and a Returned value of Yes.
+--      LEFT JOIN it on order_id. Example 1 shows the join and the fan-out check.
+--   2. Part A order counts use COUNT(DISTINCT order_id).
+--      A returned order is one whose id is present on the returns side.
+--      COUNT(DISTINCT CASE WHEN r.order_id IS NOT NULL THEN o.order_id END)
+--      counts those ids and ignores the rest.
+--   3. Integer division: 1.0 * the numerator forces a real number.
+--      See example 2.
+--   4. Part B is line grain inside each category. An order that bought two
+--      categories is counted in both. Those order counts will not add up to
+--      Part A. Revenue will add up across categories, because each line has
+--      one category.
+--   5. Two statements in this file are fine. The runner prints both results.
+
+-- Your query:

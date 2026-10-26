@@ -1,0 +1,28 @@
+-- Exercise 3 — Margin by category and region
+-- Run:
+--   python scripts/run_sql.py sql/exercises/03_margin_by_category_region.sql
+--
+-- Try this before you open sql/solutions/03_margin_by_category_region.sql.
+--
+-- Business question
+--   Where does margin hold up, and where does it thin out, when you cross
+--   product category with sales region? Who manages each region?
+--
+-- What to return
+--   One row per category and region that has sales:
+--     category, region, regional_manager, revenue, profit, margin_pct, orders
+--
+-- Hints
+--   1. The manager's name is in people, not on the order line.
+--      Join people on region. Example 1 is the pattern, including the
+--      row-count check that the join did not duplicate lines.
+--   2. One region has one manager, so the join does not multiply lines
+--      as long as people.region is unique.
+--   3. Margin is SUM(profit) / SUM(sales) after the grouping.
+--      Averaging a line-level margin gives a small order the same vote as
+--      a large one.
+--   4. There are 3 categories and 4 regions. Check whether every pair
+--      appears. A missing pair means that combination had no lines.
+--   5. Sort by region and category so you can read it as a matrix.
+
+-- Your query:

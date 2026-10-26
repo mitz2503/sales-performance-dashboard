@@ -1,0 +1,6 @@
+# Python 3.11 or newer.
+# Tested with pandas 3.1.0 and python-calamine 0.9.0.
+# pandas reads the Tableau workbook. python-calamine is the Excel engine
+# (the older xlrd engine is deprecated). SQLite and CSV use the standard library.
+pandas==3.1.0
+python-calamine==0.9.0

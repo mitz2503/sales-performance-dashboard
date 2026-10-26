@@ -1,0 +1,37 @@
+-- Exercise 4 — Year-over-year growth
+-- Run:
+--   python scripts/run_sql.py sql/exercises/04_yoy_growth.sql
+--
+-- Try this before you open sql/solutions/04_yoy_growth.sql.
+--
+-- Business question
+--   For each month, how did revenue compare with the same month one year earlier?
+--
+-- What to return
+--   One row per month:
+--     order_month          YYYY-MM
+--     order_year
+--     month_number         1 through 12
+--     revenue
+--     profit
+--     prior_year_revenue   revenue of the same month number in the previous year
+--     yoy_change           revenue minus prior_year_revenue
+--     yoy_pct              yoy_change divided by prior_year_revenue
+--
+-- Hints
+--   1. Aggregate to one row per month first, in a CTE.
+--   2. The prior year is LAG, not the previous row in calendar order.
+--      Partition by month_number and order by order_year, so "previous"
+--      means "this month, one year earlier".
+--      Example 3 used LAG for the previous calendar month. The function
+--      is the same. The PARTITION BY is the part that changes.
+--   3. Compute LAG once, in its own CTE, and refer to that column in the
+--      outer query. Repeating the window three times is legal and hard to read.
+--   4. The earliest year in the file has no prior year. Those rows should
+--      show NULL. Leave them NULL. Replacing NULL with 0 would claim the
+--      company had zero sales in a year that is not in the data.
+--   5. Confirm each year has all 12 months before you describe a year as
+--      "up" or "down" against a partial year. On the October 2026 sample,
+--      2023 through 2026 each contain every month.
+
+-- Your query:

@@ -1,0 +1,39 @@
+-- Exercise 5 — Discount impact
+-- Run:
+--   python scripts/run_sql.py sql/exercises/05_discount_impact.sql
+--
+-- Try this before you open sql/solutions/05_discount_impact.sql.
+--
+-- Business question
+--   What happens to revenue and margin as the line discount gets deeper?
+--   Which bands still make money?
+--
+-- What to return
+--   One row per band, in band order:
+--     discount_band, line_count, orders, revenue, profit,
+--     margin_pct, avg_line_discount
+--   Use these bands, in this order:
+--     No discount     discount = 0
+--     Up to 20%       discount > 0 and discount <= 0.20
+--     20% to 40%      discount > 0.20 and discount <= 0.40
+--     Over 40%        discount > 0.40
+--
+-- Hints
+--   1. discount is a rate. 0.20 means 20 percent. sales is the line revenue
+--      after that discount. Do not multiply sales by (1 - discount) again.
+--   2. Put the test for zero first. CASE keeps the first match, and
+--      "discount <= 0.20" is also true when the discount is zero.
+--   3. Build the band in a CTE, then GROUP BY the band.
+--   4. Add a numeric sort key (1, 2, 3, 4) in the same CASE family so the
+--      rows come out in band order. Alphabetical order is an accident.
+--   5. An order can contain lines in more than one band. orders on this
+--      result is "orders with at least one line in the band". Those counts
+--      will not add up to the company order count. Revenue will add up,
+--      because each line is in one band.
+--   6. Do this from the orders table. v_order_lines already has a band
+--      column. Writing the CASE is the exercise.
+--   7. avg_line_discount is AVG(discount). It gives each line one vote.
+--      That is a fair description of "how deep were the discounts in this
+--      band", and it is a different statistic from a dollar-weighted rate.
+
+-- Your query:

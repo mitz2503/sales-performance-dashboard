@@ -1,0 +1,32 @@
+-- Exercise 7 — Ship mode
+-- Run:
+--   python scripts/run_sql.py sql/exercises/07_ship_mode.sql
+--
+-- Try this before you open sql/solutions/07_ship_mode.sql.
+--
+-- Business question
+--   How many days does each ship mode actually take, and what are the
+--   revenue, margin, and average order value that travel by that mode?
+--   Speed is one fact. Whether the faster modes carry profitable orders
+--   is a separate fact.
+--
+-- What to return
+--   One row per ship mode:
+--     ship_mode, orders, avg_ship_days, revenue, profit,
+--     margin_pct, avg_order_value
+--
+-- Hints
+--   1. ship_days = julianday(ship_date) - julianday(order_date).
+--      Both columns are ISO dates, so the difference is a whole number of days.
+--   2. Every line on an order shares one ship mode and one pair of dates.
+--      If you AVG(ship_days) on the line table, a 10-line order votes ten times.
+--   3. Collapse to one row per order first:
+--        GROUP BY order_id, ship_mode
+--      and take the ship's days once (MIN of the date difference is the value,
+--      because it does not vary inside the order). Sum sales and profit there.
+--   4. Then aggregate that order-level result by ship_mode.
+--      Average order value is SUM(revenue) / COUNT(*) on that second step,
+--      because each row is now one order.
+--   5. Sort by avg_ship_days so you can read slow and fast next to the money.
+
+-- Your query:

@@ -1,0 +1,33 @@
+-- Exercise 1 — Monthly revenue trend
+-- Run:
+--   python scripts/run_sql.py sql/exercises/01_monthly_revenue_trend.sql
+--
+-- Try this before you open sql/solutions/01_monthly_revenue_trend.sql.
+--
+-- Business question
+--   How did revenue, profit, margin, order count, and average order value
+--   move month by month?
+--
+-- What to return
+--   One row per calendar month, sorted in time, with:
+--     order_month        YYYY-MM
+--     revenue            sum of sales
+--     profit             sum of profit
+--     margin_pct         profit divided by revenue, as a fraction (0.12 means 12%)
+--     orders             number of distinct orders
+--     avg_order_value    revenue divided by orders
+--     quantity           units sold
+--
+-- Hints
+--   1. Reuse the GROUP BY pattern in sql/examples/02_group_by.sql.
+--   2. strftime('%Y-%m', order_date) builds the month label from an ISO date.
+--   3. GROUP BY the same month expression you select.
+--   4. An order is COUNT(DISTINCT order_id). COUNT(*) counts lines.
+--   5. Average order value uses that order count. AVG(sales) is the average
+--      line, and a line is not an order.
+--   6. Margin uses the summed dollars. See example 2 for why.
+--   7. On the October 2026 sample you should see every month from 2023-01
+--      through 2026-12 (48 rows). A hole is either a month with no orders
+--      or a grouping bug. Check which.
+
+-- Your query:

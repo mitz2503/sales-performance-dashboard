@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Editors and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Tableau sample data is downloaded locally and is not licensed for redistribution.
+data/raw/*
+!data/raw/README.md
+!data/raw/.gitkeep
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Generated KPI extracts. Rebuild them with scripts/export_kpis.py.
+output/*
+!output/.gitkeep
+
+# A saved Power BI or Tableau workbook embeds a copy of the sample data.
+# Publish the dashboard and commit screenshots instead of the workbook.
+*.pbix
+*.pbit
+*.twb
+*.twbx
+*.hyper
+
+# Local scratch
+.ipynb_checkpoints/
+*.xlsx
+*.xls
